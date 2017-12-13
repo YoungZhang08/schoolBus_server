@@ -3,7 +3,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var login = require('./routes/login');
-var bus = require('./routes/bus');
+// var bus = require('./routes/bus');
 
 var app = express();
 
@@ -21,8 +21,8 @@ app.all('*', function(req, res, next) {
     next();
 });
 
-app.use('/login', login);
-app.use('/bus', bus);
+app.get('/login', login);
+// app.get('/bus', bus);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
