@@ -3,21 +3,15 @@ var User = require('../mongo/user');
 var router = express.Router();
 
 //登录
-router.post('/login', function(req, res) {
-    User.findOne({
-        username: req.body.userName,
-        password: req.body.password
-    }, function(err, result) {
-        if (result == null) {
-            res.json({
-                'status': false
-            });
-        } else {
-            res.json({
-                'status': true
-            });
-        }
-    });
+router.use(function(req, res) {
+    var un = req.query.username;
+    var pd = req.query.password;
+
+    console.log(un);
+
+    User.findOne({'userName': un }, function(err, doc) {
+            console.log(doc);
+        })
 });
 
 module.exports = router;
