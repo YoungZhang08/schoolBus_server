@@ -12,7 +12,7 @@ var busSchema = new Schema({
     count: Int32Array
 });
 
-var user = mongoose.model('bus', busSchema);
+var user = mongoose.model('bustables', busSchema);
 
 //暴露
 module.exports = busSchema;

@@ -1,17 +1,36 @@
 var express = require('express');
-var User = require('../mongo/user');
 var router = express.Router();
+var User = require('../mongo/user');
 
 //登录
-router.use(function(req, res) {
-    var un = req.query.username;
-    var pd = req.query.password;
+router.use(function(req, res, next) {
+    var un = req.body.username;
+    var pd = req.body.password;
 
-    console.log(un);
+    User.findOne({userName:un}, function(err, doc) {
+        if(err){
+            res.sendStatus(500);
+            console.log(err);
+        }else if(!doc){
+            console.log("用户名不存在！");
+            res.sendStatus(404);
+        }else{
+            if (doc.password === pd) {
+                console.log("登录成功！");
+                // res.sendStatus(200);
+                res.json({
+                    'status': false
+                });
+            }else if(doc.password !== pd){
+                console.log("密码错误！");
+                // res.sendStatus(404);
+                res.json({
+                    'status': true
+                });
+            }
+        }   
+    });
 
-    User.findOne({'userName': un }, function(err, doc) {
-            console.log(doc);
-        })
 });
 
 module.exports = router;
